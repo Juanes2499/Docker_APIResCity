@@ -2,3 +2,7 @@
 	path = APIRest
 	url = https://github.com/Juanes2499/APIRest_Inundaciones.git
 	branch = Development
+[submodule "BD"]
+	path = BD
+	url = https://github.com/Juanes2499/BD_Inundaciones.git
+	branch = Development

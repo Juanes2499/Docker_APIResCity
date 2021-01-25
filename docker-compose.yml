@@ -21,7 +21,7 @@ services:
   #MySQL Service
   db:
     build:
-      context: ./DB
+      context: ./DB/Docker_deployment
       dockerfile: Dockerfile
     image: mysql
     container_name: db

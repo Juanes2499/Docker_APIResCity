@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+#AMBIENTE DESA
+
 Vagrant.configure("2") do |config|
   config.vm.define :servidorUbuntuDocker do |servidorUbuntuDocker|
     servidorUbuntuDocker.vm.box = "bento/ubuntu-20.04"

@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+  #APIRest Service
+  app:
+    build:
+      context: ./APIRest
+      dockerfile: Dockerfile
+    container_name: nodejs
+    restart: unless-stopped
+    env_file: ./APIRest/.env
+    links:
+      - db
+    ports:
+      - "3010:3010"
+    #volumes:
+    #  - ./api:/home/node/app
+    #  - ./api:/home/node/app/node_modules
+    networks:
+      - app-network
+
+  #MySQL Service
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ROOTDEV2021
+    volumes:
+      - ./BD/Docker_deployment:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local

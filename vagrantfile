@@ -9,5 +9,9 @@ Vagrant.configure("2") do |config|
     servidorUbuntuDocker.vm.network :private_network, ip: "192.170.1.2"
     servidorUbuntuDocker.vm.hostname = "servidorUbuntuDocker"
     #servidorUbuntuDocker.vm.provision "shell", path:"StartUpServer.sh"
+    servidorUbuntuDocker.vm.provider "virtualbox" do |v|
+      v.memory = 2100
+      v.cpus = 2
+    end
   end
 end

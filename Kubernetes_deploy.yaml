@@ -8,16 +8,13 @@ metadata:
   labels:
     app: bd
 spec:
-  type: LoadBalancer 
+  type: clusterIP 
   ports:
-    - name: "32000"
+    - name: "3306"
       port: 3306
-      targetPort: 32000
   selector:
       app: bd
       tier: mysql
-  #externalIPs:
-  #  - 80.11.12.10
 ---
 #Volume
 apiVersion: v1
@@ -81,16 +78,13 @@ metadata:
   labels:
     app: nodejs
 spec:
-  type: LoadBalancer 
+  type: NodePort 
   ports:
     - name: "3010"
       port: 3010
-      targetPort: 3010
   selector:
       app: nodejs
       tier: api
-  #externalIPs:
-  #  - 192.168.49.2
 ---
 #Deployment
 apiVersion: apps/v1
@@ -120,9 +114,9 @@ spec:
         - name: PORT_SERVER
           value: "3010"
         - name: MYSQL_HOST
-          value: "192.168.49.2"
+          value: "mysql"
         - name: MYSQL_PORT
-          value: "32000"
+          value: "3306"
         - name: MYSQL_USER
           value: "DBATEST"
         - name: MYSQL_PASS

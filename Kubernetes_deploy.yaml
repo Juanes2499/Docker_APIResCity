@@ -1,0 +1,151 @@
+#*****************DataBase*****************#
+#Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: default
+  labels:
+    app: bd
+spec:
+  type: LoadBalancer 
+  ports:
+    - name: "32000"
+      port: 3306
+      targetPort: 32000
+  selector:
+      app: bd
+      tier: mysql
+  #externalIPs:
+  #  - 80.11.12.10
+---
+#Volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: bd
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: default
+  labels:
+    app: bd
+spec:
+  selector:
+    matchLabels:
+      app: bd
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bd
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "ROOTTEST2021"
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+---
+#*****************ApiRest*****************#
+#Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: apirest
+  namespace: default
+  labels:
+    app: nodejs
+spec:
+  type: LoadBalancer 
+  ports:
+    - name: "3010"
+      port: 3010
+      targetPort: 3010
+  selector:
+      app: nodejs
+      tier: api
+  #externalIPs:
+  #  - 192.168.49.2
+---
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apirest
+  namespace: default
+  labels:
+    app: nodejs
+spec:
+  selector:
+    matchLabels:
+      app: nodejs
+      tier: api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nodejs
+        tier: api
+    spec:
+      containers:
+      - image: juanes240899/microservice-api:1.1
+        name: api
+        env:
+        - name: PORT_SERVER
+          value: "3010"
+        - name: MYSQL_HOST
+          value: "192.168.49.2"
+        - name: MYSQL_PORT
+          value: "32000"
+        - name: MYSQL_USER
+          value: "DBATEST"
+        - name: MYSQL_PASS
+          value: "DBATEST2021"
+        - name: MYSQL_DATABASE
+          value: "PROYECTO_GRADO_API_TEST"
+        - name: TOKEN_KEY
+          value: "12345-67890-09876-54321"
+        - name: TOKEN_EXPIRE_IN
+          value: "300"
+        - name: AUTHENTICATION
+          value: "false"
+        - name: MQTT_HOST
+          value: "maqiatto.com"
+        - name: MQTT_CLIENT_ID
+          value: "clientId-PQQtMLRjX6"
+        - name: MQTT_USERNAME
+          value: "juan.nichoy@uao.edu.co"
+        - name: MQTT_PASSWORD
+          value: "1234"
+        - name: MQTT_TOPIC_NOTIFICACIONS
+          value: "juan.nichoy@uao.edu.co/PruebaNotificaciones"  
+        ports:
+        - containerPort: 3010
+          name: api
+

@@ -8,14 +8,25 @@ services:
       dockerfile: Dockerfile
     container_name: nodejs
     restart: unless-stopped
-    env_file: ./APIRest/.env
+    environment:
+      - PORT_SERVER=3010
+      - MYSQL_HOST=192.170.1.3
+      - MYSQL_PORT=32000
+      - MYSQL_USER=DBATEST
+      - MYSQL_PASS=DBATEST2021
+      - MYSQL_DATABASE=PROYECTO_GRADO_API_TEST
+      - TOKEN_KEY=12345-67890-09876-54321
+      - TOKEN_EXPIRE_IN=300
+      - AUTHENTICATION=false
+      - MQTT_HOST=maqiatto.com
+      - MQTT_CLIENT_ID=clientId-PQQtMLRjX6
+      - MQTT_USERNAME=juan.nichoy@uao.edu.co
+      - MQTT_PASSWORD=1234
+      - MQTT_TOPIC_NOTIFICACIONS=juan.nichoy@uao.edu.co/PruebaNotificaciones
     links:
       - db
     ports:
       - "3010:3010"
-    #volumes:
-    #  - ./api:/home/node/app
-    #  - ./api:/home/node/app/node_modules
     networks:
       - app-network
 
@@ -25,7 +36,7 @@ services:
     ports:
       - "32000:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ROOTDEV2021
+      MYSQL_ROOT_PASSWORD: ROOTTEST2021
     volumes:
       - ./BD/Docker_deployment:/docker-entrypoint-initdb.d/:ro
     networks:

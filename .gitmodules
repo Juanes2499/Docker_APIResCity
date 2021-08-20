@@ -1,4 +1,0 @@
-[submodule "APIRest"]
-	path = APIRest
-	url = https://github.com/Juanes2499/APIRest_Inundaciones.git
-	branch = Production

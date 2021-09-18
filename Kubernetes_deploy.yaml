@@ -148,17 +148,25 @@ spec:
         - name: MQTT_CLIENT_ID
           value: "clientId-PQQtMLRjX6"
         - name: MQTT_USERNAME
-          value: "juan.nichoy@uao.edu.co"
+          value: "sensores.rescity@gmail.com"
         - name: MQTT_PASSWORD
-          value: "1234"
+          value: "R35Ci1tyzozi"
         - name: MQTT_TOPIC_NOTIFICACIONS
-          value: "juan.nichoy@uao.edu.co/PruebaNotificaciones"
+          value: "sensores.rescity@gmail.com/SensorsReport"
         - name: MAIL_USER
-          value: "junichoy@gmail.com"
-        - name: MQTT_PASSWORD
-          value: "ju12345678"
+          value: "sensores.rescity@gmail.com"
+        - name: MAIL_PASSWORD
+          value: "R35Ci1tyzozi"
         - name: IMG_CORREO
-          value: "https://pattern.uao.edu.co/images/UAO-logo-acreditacion.png"   
+          value: "https://pattern.uao.edu.co/images/UAO-logo-acreditacion.png"  
+        - name: KAFKA_BROKER
+          value: "127.0.0.1:9092"  
+        - name: KAFKA_CLIENT_ID
+          value: "53n30r35"  
+        - name: KAFKA_TOPIC
+          value: "SensoresTopic"  
+        - name: KAFKA_kEY
+          value: "SensorsReport"  
         ports:
         - containerPort: 3010
           name: api
